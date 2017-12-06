@@ -12,7 +12,7 @@ from nltk.stem.lancaster import LancasterStemmer
 from nltk.stem import WordNetLemmatizer
 
 GLOBAL_COOLOFF_PERIOD = 5
-SPECIFIC_COOLOFF_PERIOD = 5
+SPECIFIC_COOLOFF_PERIOD = 30
 
 stemmer = LancasterStemmer()
 lemmatizer = WordNetLemmatizer()

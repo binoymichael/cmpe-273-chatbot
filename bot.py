@@ -47,21 +47,33 @@ ad_categories = {
         'chirstma': 'gift',
         'gift': 'gift',
         'watch': 'gift',
-        'softw': 'azure'
+        'softw': 'azure',
+	'cloud': 'azure'
         }
 ad_words = set(ad_categories.keys())
 
 last_ad_posted = [None]
 ads = {
         'hotel': {'last_posted': None, 'ads': ['Check out great travel deals at TripAdvisor! https://www.tripadvisor.com/', 'Great offers await you at Expedia https://www.expedia.com/']},
-        'book': {'last_posted': None, 'ads': ['Check out great travel deals at TripAdvisor! https://www.tripadvisor.com/', 'Great offers await you at Expedia https://www.expedia.com/']},
-        'movie': {'last_posted': None, 'ads': ['Check out great travel deals at TripAdvisor! https://www.tripadvisor.com/', 'Great offers await you at Expedia https://www.expedia.com/']},
-        'study': {'last_posted': None, 'ads': ['Check out great travel deals at TripAdvisor! https://www.tripadvisor.com/', 'Great offers await you at Expedia https://www.expedia.com/']},
-        'job': {'last_posted': None, 'ads': ['Check out great travel deals at TripAdvisor! https://www.tripadvisor.com/', 'Great offers await you at Expedia https://www.expedia.com/']},
-        'car': {'last_posted': None, 'ads': ['Check out great travel deals at TripAdvisor! https://www.tripadvisor.com/', 'Great offers await you at Expedia https://www.expedia.com/']},
-        'bitcoin': {'last_posted': None, 'ads': ['Check out great travel deals at TripAdvisor! https://www.tripadvisor.com/', 'Great offers await you at Expedia https://www.expedia.com/']},
-        'gift': {'last_posted': None, 'ads': ['Check out great travel deals at TripAdvisor! https://www.tripadvisor.com/', 'Great offers await you at Expedia https://www.expedia.com/']},
-        'azure': {'last_posted': None, 'ads': ['Check out great travel deals at TripAdvisor! https://www.tripadvisor.com/', 'Great offers await you at Expedia https://www.expedia.com/']},
+
+        'book': {'last_posted': None, 'ads': ['Kindle eBooks, Kindle Holiday Deals, Save over 1000 great deals https://www.amazon.com/Kindle-eBooks/', 'This Holiday Season, Get all the books on your wish-list  https://www.barnesandnoble.com/']},
+
+        'movie': {'last_posted': None, 'ads': ['Check out movies this week in AMC theatre near you https://www.amctheatres.com/', 'Catch your favourite movies in cinema near you on https://www.fandango.com/']},
+
+        'study': {'last_posted': None, 'ads': ['Learn to code for free on https://www.codecademy.com/', 'You can learn anything.For free. For everyone. Forever. https://www.khanacademy.org/']},
+
+
+        'job': {'last_posted': None, 'ads': ['Find a job that suits you at https://www.indeed.com/', 'Get updates on your job application every step of the way. https://www.ziprecruiter.com/']},
+
+        'car': {'last_posted': None, 'ads': ['Quickest Acceleration.Longest Range. The Safest Cars Ever https://www.tesla.com/', ' Ultimate Price Transparency See what others paid before you buy or lease from TrueCar Certified Dealers  https://www.truecar.com/','Find all types of car here on your budget https://www.cars.com/']},
+
+        'bitcoin': {'last_posted': None, 'ads': ['Buy Bitcoin Now Use your credit card to buy bitcoins, safely and quickly https://buy.bitcoin.com/', 'Buy and Sell digital currency https://www.coinbase.com/','Trade securely on the world most active digital asset exchange.https://poloniex.com/']},
+
+        'gift': {'last_posted': None, 'ads': ['FIND THE PERFECT GIFT, EVERY TIME. https://www.gifts.com/', 'Find best gifts at https://www.amazon.com/gp/gift-finder']},
+
+        'azure': {'last_posted': None, 'ads': ['Amazon Web Services offers reliable, scalable, and inexpensive cloud computing services https://aws.amazon.com/', 'Microsoft Azure is an open, flexible, enterprise-grade cloud computing platform https://azure.microsoft.com/']},
+
+
         }
 
 class Bot(object):

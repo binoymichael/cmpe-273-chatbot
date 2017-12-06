@@ -11,8 +11,8 @@ from nltk.corpus import stopwords
 from nltk.stem.lancaster import LancasterStemmer
 from nltk.stem import WordNetLemmatizer
 
-GLOBAL_COOLOFF_PERIOD = 10
-SPECIFIC_COOLOFF_PERIOD = 60
+GLOBAL_COOLOFF_PERIOD = 5
+SPECIFIC_COOLOFF_PERIOD = 5
 
 stemmer = LancasterStemmer()
 lemmatizer = WordNetLemmatizer()
@@ -27,12 +27,41 @@ ad_categories = {
         'trip': 'hotel',
         'vac': 'hotel',
         'hotel': 'hotel',
+        'book': 'book',
+        'read': 'book',
+        'movy': 'movie',
+        'film': 'movie',
+        'cinem': 'movie',
+        'program': 'study',
+        'study': 'study',
+        'cod': 'study',
+        'job': 'job',
+        'interview': 'job',
+        'tesl': 'car',
+        'car': 'car',
+        'automobl': 'car',
+        'cryptocur': 'bitcoin',
+        'ethere': 'bitcoin',
+        'bitcoin': 'bitcoin',
+        'blockchain': 'bitcoin',
+        'chirstma': 'gift',
+        'gift': 'gift',
+        'watch': 'gift',
+        'softw': 'azure'
         }
 ad_words = set(ad_categories.keys())
 
 last_ad_posted = [None]
 ads = {
-        'hotel': {'last_posted': None, 'ads': ['Wow great hotel deal!']}
+        'hotel': {'last_posted': None, 'ads': ['Check out great travel deals at TripAdvisor! https://www.tripadvisor.com/', 'Great offers await you at Expedia https://www.expedia.com/']},
+        'book': {'last_posted': None, 'ads': ['Check out great travel deals at TripAdvisor! https://www.tripadvisor.com/', 'Great offers await you at Expedia https://www.expedia.com/']},
+        'movie': {'last_posted': None, 'ads': ['Check out great travel deals at TripAdvisor! https://www.tripadvisor.com/', 'Great offers await you at Expedia https://www.expedia.com/']},
+        'study': {'last_posted': None, 'ads': ['Check out great travel deals at TripAdvisor! https://www.tripadvisor.com/', 'Great offers await you at Expedia https://www.expedia.com/']},
+        'job': {'last_posted': None, 'ads': ['Check out great travel deals at TripAdvisor! https://www.tripadvisor.com/', 'Great offers await you at Expedia https://www.expedia.com/']},
+        'car': {'last_posted': None, 'ads': ['Check out great travel deals at TripAdvisor! https://www.tripadvisor.com/', 'Great offers await you at Expedia https://www.expedia.com/']},
+        'bitcoin': {'last_posted': None, 'ads': ['Check out great travel deals at TripAdvisor! https://www.tripadvisor.com/', 'Great offers await you at Expedia https://www.expedia.com/']},
+        'gift': {'last_posted': None, 'ads': ['Check out great travel deals at TripAdvisor! https://www.tripadvisor.com/', 'Great offers await you at Expedia https://www.expedia.com/']},
+        'azure': {'last_posted': None, 'ads': ['Check out great travel deals at TripAdvisor! https://www.tripadvisor.com/', 'Great offers await you at Expedia https://www.expedia.com/']},
         }
 
 class Bot(object):
@@ -98,17 +127,13 @@ class Bot(object):
         target_ad_word = list(target_ad_words)[0]
         target_category = ad_categories[target_ad_word]
 
-        print(100)
-
-        if last_ad_posted[0] and datetime.datetime.now() < last_ad_posted[0] + datetime.timedelta(seconds=GLOBAL_COOLOFF_PERIOD):
+        if last_ad_posted[0] and datetime.datetime.now() < (last_ad_posted[0] + datetime.timedelta(seconds=GLOBAL_COOLOFF_PERIOD)):
             return
 
-        print(101)
         ad_record = ads[target_category]
-        if ad_record['last_posted'] and datetime.datetime.now() < ad_record['last_posted'] + datetime.timedelta(seconds=SPECIFIC_COOLOFF_PERIOD):
+        if ad_record['last_posted'] and datetime.datetime.now() < (ad_record['last_posted'] + datetime.timedelta(seconds=SPECIFIC_COOLOFF_PERIOD)):
             return
             
-        print(102)
         ad_record['last_posted'] = datetime.datetime.now()
         last_ad_posted[0] = datetime.datetime.now()
 
@@ -117,4 +142,3 @@ class Bot(object):
                                             channel=event['event']['channel'],
                                             text=display_ad,
                                             )
-

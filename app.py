@@ -18,7 +18,7 @@ def _event_handler(event_type, slack_event):
     team_id = slack_event["team_id"]
     subtype = slack_event['event'].get('subtype')
 
-    if event_type == "message" and not subtype:
+    if event_type == "message" and subtype != 'bot_message':
         user_id = slack_event["event"]["user"]
         pyBot.send_reply(slack_event, team_id, user_id)
         return make_response("Reply message", 200,)
@@ -62,7 +62,7 @@ def thanks():
 @app.route("/listening", methods=["GET", "POST"])
 def hears():
     slack_event = json.loads(request.data)
-    print(slack_event)
+    # print(slack_event)
 
     #  https://api.slack.com/events/url_verification
     if "challenge" in slack_event:

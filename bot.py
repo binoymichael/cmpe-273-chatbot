@@ -1,11 +1,39 @@
 # -*- coding: utf-8 -*-
 import os
 import message
-
 from slackclient import SlackClient
+import string
+import datetime
+import random
+
+import nltk
+from nltk.corpus import stopwords
+from nltk.stem.lancaster import LancasterStemmer
+from nltk.stem import WordNetLemmatizer
+
+GLOBAL_COOLOFF_PERIOD = 10
+SPECIFIC_COOLOFF_PERIOD = 60
+
+stemmer = LancasterStemmer()
+lemmatizer = WordNetLemmatizer()
 
 authed_teams = {}
 
+stop_words = set(stopwords.words('english'))
+
+translator = str.maketrans('','',string.punctuation)
+
+ad_categories = {
+        'trip': 'hotel',
+        'vac': 'hotel',
+        'hotel': 'hotel',
+        }
+ad_words = set(ad_categories.keys())
+
+last_ad_posted = [None]
+ads = {
+        'hotel': {'last_posted': None, 'ads': ['Wow great hotel deal!']}
+        }
 
 class Bot(object):
     def __init__(self):
@@ -39,11 +67,54 @@ class Bot(object):
 
 
     def send_reply(self, event, team_id, user_id):
-        print(event['event']['channel'])
+        print('===')
+        print(event)
+        user_text = event['event']['text']
+
+        #remove punctuation
+        message = user_text.translate(translator)
+
+        # tokenize
+        tokens = nltk.word_tokenize(message)
+        tokens = [t.lower() for t in tokens]
+
+        # remove stopwords
+        sanitized = filter(lambda x: x not in stop_words, tokens)
+
+        # stemming
+        stemmed = [stemmer.stem(t) for t in sanitized]
+
+        # lemmatize
+        lemmatized = {lemmatizer.lemmatize(t) for t in stemmed}
+
+        # print extracted words
+        print(user_text)
+        print(lemmatized)
+        target_ad_words = lemmatized.intersection(ad_words)
+
+        if not target_ad_words: 
+            return
+
+        target_ad_word = list(target_ad_words)[0]
+        target_category = ad_categories[target_ad_word]
+
+        print(100)
+
+        if last_ad_posted[0] and datetime.datetime.now() < last_ad_posted[0] + datetime.timedelta(seconds=GLOBAL_COOLOFF_PERIOD):
+            return
+
+        print(101)
+        ad_record = ads[target_category]
+        if ad_record['last_posted'] and datetime.datetime.now() < ad_record['last_posted'] + datetime.timedelta(seconds=SPECIFIC_COOLOFF_PERIOD):
+            return
+            
+        print(102)
+        ad_record['last_posted'] = datetime.datetime.now()
+        last_ad_posted[0] = datetime.datetime.now()
+
+        display_ad = random.choice(ad_record['ads'])
         post_message = self.client.api_call("chat.postMessage",
                                             channel=event['event']['channel'],
-                                            text='Echo!',
+                                            text=display_ad,
                                             )
-        print(post_message)
-
 
